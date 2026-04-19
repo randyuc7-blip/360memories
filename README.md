@@ -7,8 +7,6 @@ Static, Netlify-ready lead capture site for **360 Memories**. The build is optim
 ```text
 .
 |-- assets/
-|   |-- logo-badge-dark.png
-|   |-- logo-badge-light.png
 |   |-- social-share.png
 |   `-- logo.png
 |-- netlify/
@@ -62,13 +60,7 @@ Use the translation objects to change:
 - form labels
 - thank-you messaging
 
-The site now uses these logo assets:
-
-- [assets/logo.png](/Users/randyurizar/Documents/projects-master/360memories/assets/logo.png) for the main header logo
-- [assets/logo-badge-dark.png](/Users/randyurizar/Documents/projects-master/360memories/assets/logo-badge-dark.png) as a circular accent mark
-- [assets/logo-badge-light.png](/Users/randyurizar/Documents/projects-master/360memories/assets/logo-badge-light.png) as a secondary brand accent
-
-If you want to swap them later, replace the files directly or update the `src` values in [index.html](/Users/randyurizar/Documents/projects-master/360memories/index.html) and [thank-you.html](/Users/randyurizar/Documents/projects-master/360memories/thank-you.html).
+The site now uses [assets/logo.png](/Users/randyurizar/Documents/projects-master/360memories/assets/logo.png) as the single active brand logo. If you want to swap it later, replace that file directly or update the `src` values in [index.html](/Users/randyurizar/Documents/projects-master/360memories/index.html) and [thank-you.html](/Users/randyurizar/Documents/projects-master/360memories/thank-you.html).
 
 The social share preview image is [assets/social-share.png](/Users/randyurizar/Documents/projects-master/360memories/assets/social-share.png) and is referenced by the Open Graph and Twitter meta tags in [index.html](/Users/randyurizar/Documents/projects-master/360memories/index.html).
 
