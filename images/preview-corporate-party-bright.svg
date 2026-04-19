@@ -1,0 +1,15 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#EFF3F8"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="#FFFFFF"/>
+  <circle cx="548" cy="218" r="166" fill="#FF6B3D" opacity="0.14"/>
+  <text x="110" y="196" fill="#1D2027" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Bright Corporate Party</text>
+  <text x="110" y="236" fill="#5E6572" font-family="Arial, Helvetica, sans-serif" font-size="22">Party overlay for bright branded event energy</text>
+  <rect x="174" y="344" width="372" height="564" rx="186" fill="#FFFFFF" stroke="#1D2027" stroke-width="8"/>
+  <circle cx="360" cy="530" r="104" fill="#F7F9FB" stroke="#1D2027" stroke-width="8"/>
+  <circle cx="206" cy="1010" r="18" fill="#FF6B3D"/>
+  <circle cx="286" cy="1046" r="18" fill="#1D2027"/>
+  <circle cx="360" cy="1082" r="18" fill="#FF6B3D"/>
+  <circle cx="434" cy="1046" r="18" fill="#1D2027"/>
+  <circle cx="514" cy="1010" r="18" fill="#FF6B3D"/>
+  <text x="360" y="1224" text-anchor="middle" fill="#1D2027" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Party overlay</text>
+</svg>

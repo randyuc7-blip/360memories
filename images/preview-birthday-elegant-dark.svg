@@ -1,0 +1,13 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#070A0E"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="#121822"/>
+  <circle cx="198" cy="216" r="80" fill="#FFFFFF" opacity="0.1"/>
+  <circle cx="542" cy="210" r="164" fill="#FF6B3D" opacity="0.14"/>
+  <text x="110" y="194" fill="#F4F7FB" font-family="Georgia, serif" font-size="38" font-style="italic">Dark Birthday</text>
+  <text x="110" y="236" fill="#BBC4D0" font-family="Arial, Helvetica, sans-serif" font-size="22">Elegant overlay with a sleek nighttime finish</text>
+  <rect x="172" y="344" width="376" height="572" rx="188" fill="#1A212C" stroke="#F4F7FB" stroke-width="6"/>
+  <circle cx="360" cy="530" r="106" fill="#0C1118" stroke="#F4F7FB" stroke-width="6"/>
+  <path d="M200 1030H520" stroke="#F4F7FB" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+  <path d="M230 1064H490" stroke="#F4F7FB" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <text x="360" y="1212" text-anchor="middle" fill="#F4F7FB" font-family="Georgia, serif" font-size="32" font-style="italic">Elegant celebration</text>
+</svg>

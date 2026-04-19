@@ -1,0 +1,14 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#EFF3F8"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="#FFFFFF"/>
+  <circle cx="188" cy="228" r="94" fill="#1D2027" opacity="0.08"/>
+  <circle cx="544" cy="240" r="160" fill="#FF6B3D" opacity="0.16"/>
+  <text x="110" y="194" fill="#1D2027" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Bright Wedding Party</text>
+  <text x="110" y="236" fill="#5E6572" font-family="Arial, Helvetica, sans-serif" font-size="22">Playful overlay with a bright social-ready feel</text>
+  <rect x="168" y="340" width="384" height="574" rx="192" fill="#FFFFFF" stroke="#1D2027" stroke-width="8"/>
+  <circle cx="360" cy="530" r="106" fill="#F7F9FB" stroke="#1D2027" stroke-width="8"/>
+  <circle cx="206" cy="1048" r="18" fill="#FF6B3D"/>
+  <circle cx="360" cy="1082" r="18" fill="#1D2027"/>
+  <circle cx="514" cy="1048" r="18" fill="#FF6B3D"/>
+  <text x="360" y="1222" text-anchor="middle" fill="#1D2027" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Party overlay</text>
+</svg>

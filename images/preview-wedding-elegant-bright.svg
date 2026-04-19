@@ -1,0 +1,18 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#F4F7FB"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="url(#bg)"/>
+  <circle cx="532" cy="214" r="166" fill="#FF6B3D" opacity="0.14"/>
+  <text x="110" y="194" fill="#1F2430" font-family="Georgia, serif" font-size="38" font-style="italic">Bright Wedding</text>
+  <text x="110" y="236" fill="#5A6270" font-family="Arial, Helvetica, sans-serif" font-size="22">Elegant overlay with airy, polished detail</text>
+  <rect x="172" y="334" width="376" height="582" rx="188" fill="#FFFFFF" stroke="#1F2430" stroke-width="6"/>
+  <circle cx="360" cy="530" r="106" fill="#F6F8FB" stroke="#1F2430" stroke-width="6"/>
+  <path d="M180 1040H540" stroke="#1F2430" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <path d="M220 1070H500" stroke="#1F2430" stroke-width="3" stroke-linecap="round" opacity="0.44"/>
+  <text x="360" y="1212" text-anchor="middle" fill="#1F2430" font-family="Georgia, serif" font-size="32" font-style="italic">Elegant</text>
+  <defs>
+    <linearGradient id="bg" x1="60" y1="98" x2="660" y2="1382" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E8EDF3"/>
+    </linearGradient>
+  </defs>
+</svg>

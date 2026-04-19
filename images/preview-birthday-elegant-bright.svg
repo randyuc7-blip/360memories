@@ -1,0 +1,13 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#EFF3F8"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="#FFFFFF"/>
+  <circle cx="198" cy="216" r="80" fill="#1D2027" opacity="0.08"/>
+  <circle cx="542" cy="210" r="164" fill="#FF6B3D" opacity="0.12"/>
+  <text x="110" y="194" fill="#1D2027" font-family="Georgia, serif" font-size="38" font-style="italic">Bright Birthday</text>
+  <text x="110" y="236" fill="#5E6572" font-family="Arial, Helvetica, sans-serif" font-size="22">Elegant overlay with a clean daytime finish</text>
+  <rect x="172" y="344" width="376" height="572" rx="188" fill="#FFFFFF" stroke="#1D2027" stroke-width="6"/>
+  <circle cx="360" cy="530" r="106" fill="#F7F9FB" stroke="#1D2027" stroke-width="6"/>
+  <path d="M200 1030H520" stroke="#1D2027" stroke-width="3" stroke-linecap="round" opacity="0.68"/>
+  <path d="M230 1064H490" stroke="#1D2027" stroke-width="3" stroke-linecap="round" opacity="0.42"/>
+  <text x="360" y="1212" text-anchor="middle" fill="#1D2027" font-family="Georgia, serif" font-size="32" font-style="italic">Elegant celebration</text>
+</svg>

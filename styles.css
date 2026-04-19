@@ -498,6 +498,106 @@ p {
   grid-column: span 2;
 }
 
+.customizer-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.customizer-controls,
+.phone-preview-frame {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.customizer-controls {
+  display: grid;
+  gap: 1.2rem;
+  padding: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.control-group {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.control-label {
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.control-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.control-chip {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  min-height: 46px;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 320ms ease,
+    background 320ms ease,
+    border-color 320ms ease,
+    transform 320ms ease;
+}
+
+.control-chip:hover,
+.control-chip:focus-visible {
+  color: var(--text);
+  border-color: rgba(255, 107, 61, 0.3);
+  transform: translateY(-1px);
+}
+
+.control-chip.is-active {
+  background: var(--accent);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.phone-preview-shell {
+  display: flex;
+  justify-content: center;
+}
+
+.phone-preview-frame {
+  width: min(100%, 360px);
+  padding: 0.85rem;
+  border-radius: 36px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    #101014;
+}
+
+.phone-preview-screen {
+  overflow: hidden;
+  aspect-ratio: 9 / 18.5;
+  border-radius: 28px;
+  background: #0b0b0d;
+}
+
+.phone-preview-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 360ms ease;
+}
+
+.phone-preview-screen img.is-fading {
+  opacity: 0.35;
+}
+
 .value-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.15rem;
@@ -691,6 +791,7 @@ p {
 @media (max-width: 960px) {
   .hero,
   .gallery-layout,
+  .customizer-layout,
   .lead-section,
   .value-grid,
   .packages-grid {
@@ -774,6 +875,7 @@ p {
 
   .packages-grid,
   .gallery-layout,
+  .customizer-layout,
   .value-grid,
   .faq-list,
   .lead-section {
@@ -804,6 +906,18 @@ p {
   .gallery-grid {
     grid-template-columns: 1fr;
     gap: 0.9rem;
+  }
+
+  .customizer-controls {
+    padding: 1.25rem;
+  }
+
+  .phone-preview-shell {
+    order: -1;
+  }
+
+  .phone-preview-frame {
+    width: min(100%, 320px);
   }
 
   .gallery-tile.wide {

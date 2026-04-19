@@ -134,6 +134,55 @@
     });
   });
 
+  function initExperienceCustomizer() {
+    const previewImage = document.querySelector("#experience-preview-image");
+    const optionButtons = document.querySelectorAll("[data-preview-group]");
+
+    if (!previewImage || !optionButtons.length) {
+      return;
+    }
+
+    const state = {
+      event: "wedding",
+      overlay: "minimal",
+      theme: "warm"
+    };
+
+    function formatAlt() {
+      return `Phone preview of a ${state.event} 360 booth experience with a ${state.overlay} overlay and ${state.theme} theme`;
+    }
+
+    function updatePreview() {
+      previewImage.classList.add("is-fading");
+
+      window.setTimeout(() => {
+        previewImage.src = `images/preview-${state.event}-${state.overlay}-${state.theme}.svg`;
+        previewImage.alt = formatAlt();
+        previewImage.classList.remove("is-fading");
+      }, 180);
+    }
+
+    optionButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const group = button.dataset.previewGroup;
+        const value = button.dataset.previewValue;
+
+        if (!group || !value || state[group] === value) {
+          return;
+        }
+
+        state[group] = value;
+
+        document
+          .querySelectorAll(`[data-preview-group="${group}"]`)
+          .forEach((node) => node.classList.remove("is-active"));
+
+        button.classList.add("is-active");
+        updatePreview();
+      });
+    });
+  }
+
   function initScrollAnimations() {
     const revealTargets = [
       ".hero-copy > .eyebrow",
@@ -145,6 +194,8 @@
       "#packages .packages-grid",
       "#gallery .section-heading",
       "#gallery .gallery-layout",
+      "#experience-customizer .section-heading",
+      "#experience-customizer .customizer-layout",
       "#value .section-heading",
       "#value .value-grid",
       "#faq .section-heading",
@@ -192,4 +243,5 @@
   }
 
   initScrollAnimations();
+  initExperienceCustomizer();
 })();

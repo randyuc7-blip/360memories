@@ -1,0 +1,15 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#190F0C"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="#281612"/>
+  <circle cx="542" cy="210" r="168" fill="#FF6B3D" opacity="0.24"/>
+  <text x="110" y="196" fill="#FFF5EF" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Warm Birthday Party</text>
+  <text x="110" y="236" fill="#E6CFC6" font-family="Arial, Helvetica, sans-serif" font-size="22">Party overlay with social-ready motion cues</text>
+  <rect x="170" y="344" width="380" height="570" rx="190" fill="#2E1B16" stroke="#FFF5EF" stroke-width="8"/>
+  <circle cx="360" cy="530" r="106" fill="#1A100D" stroke="#FFF5EF" stroke-width="8"/>
+  <circle cx="204" cy="1006" r="18" fill="#FF6B3D"/>
+  <circle cx="282" cy="1048" r="18" fill="#FFF5EF"/>
+  <circle cx="360" cy="1082" r="18" fill="#FF6B3D"/>
+  <circle cx="438" cy="1048" r="18" fill="#FFF5EF"/>
+  <circle cx="516" cy="1006" r="18" fill="#FF6B3D"/>
+  <text x="360" y="1224" text-anchor="middle" fill="#FFF5EF" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Party overlay</text>
+</svg>

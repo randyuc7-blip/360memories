@@ -1,0 +1,18 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#F1F4F8"/>
+  <circle cx="542" cy="214" r="178" fill="#FF6B3D" opacity="0.16"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="url(#bg)"/>
+  <text x="110" y="196" fill="#1D2027" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Bright Wedding</text>
+  <text x="110" y="236" fill="#5D6472" font-family="Arial, Helvetica, sans-serif" font-size="22">Minimal overlay with a crisp daylight mood</text>
+  <rect x="164" y="346" width="392" height="560" rx="196" fill="#FFFFFF" stroke="#1D2027" stroke-width="8"/>
+  <circle cx="360" cy="530" r="108" fill="#F6F8FB" stroke="#1D2027" stroke-width="8"/>
+  <rect x="236" y="954" width="248" height="20" rx="10" fill="#1D2027" opacity="0.75"/>
+  <rect x="112" y="1118" width="496" height="132" rx="66" fill="#1D2027" opacity="0.08"/>
+  <text x="360" y="1198" text-anchor="middle" fill="#1D2027" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">360 Memories</text>
+  <defs>
+    <linearGradient id="bg" x1="60" y1="98" x2="660" y2="1382" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E8EDF3"/>
+    </linearGradient>
+  </defs>
+</svg>

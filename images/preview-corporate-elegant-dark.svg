@@ -1,0 +1,12 @@
+<svg width="720" height="1480" viewBox="0 0 720 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="1480" fill="#07090D"/>
+  <rect x="60" y="98" width="600" height="1284" rx="42" fill="#12161D"/>
+  <circle cx="548" cy="218" r="166" fill="#FF6B3D" opacity="0.14"/>
+  <text x="110" y="194" fill="#F4F7FB" font-family="Georgia, serif" font-size="38" font-style="italic">Dark Corporate</text>
+  <text x="110" y="236" fill="#BBC4D0" font-family="Arial, Helvetica, sans-serif" font-size="22">Elegant overlay for a premium evening brand mood</text>
+  <rect x="174" y="344" width="372" height="564" rx="186" fill="#1A1F28" stroke="#F4F7FB" stroke-width="6"/>
+  <circle cx="360" cy="530" r="104" fill="#0C1117" stroke="#F4F7FB" stroke-width="6"/>
+  <path d="M206 1030H514" stroke="#F4F7FB" stroke-width="3" stroke-linecap="round" opacity="0.68"/>
+  <path d="M240 1060H480" stroke="#F4F7FB" stroke-width="3" stroke-linecap="round" opacity="0.42"/>
+  <text x="360" y="1210" text-anchor="middle" fill="#F4F7FB" font-family="Georgia, serif" font-size="32" font-style="italic">Elegant brand look</text>
+</svg>
