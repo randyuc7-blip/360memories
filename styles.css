@@ -68,11 +68,20 @@ textarea {
 
 .site-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.2rem;
   padding: 1.2rem 0;
   backdrop-filter: blur(18px);
+}
+
+.header-top-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
 }
 
 .brand {
@@ -96,12 +105,6 @@ textarea {
 .zip-chip span {
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
 }
 
 .lang-toggle {
@@ -138,6 +141,7 @@ textarea {
 .header-call {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 0.75rem 1rem;
   border: 1px solid var(--line);
   color: var(--text);
@@ -718,8 +722,6 @@ p {
   }
 
   .site-header {
-    align-items: flex-start;
-    flex-direction: column;
     gap: 0.9rem;
     padding: 0.9rem 0 0.5rem;
   }
@@ -728,26 +730,14 @@ p {
     width: min(240px, 62vw);
   }
 
-  .header-actions {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.8rem;
-  }
-
-  .lang-toggle {
-    align-self: flex-start;
-  }
-
   .lang-btn {
     min-width: 88px;
     font-size: 0.9rem;
   }
 
   .header-call {
-    width: 100%;
+    min-width: min(100%, 220px);
     min-height: 52px;
-    justify-content: center;
   }
 
   .hero-actions {
