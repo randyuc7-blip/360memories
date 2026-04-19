@@ -242,6 +242,51 @@
     });
   }
 
+  function initStickyCtaVisibility() {
+    const stickyCta = document.querySelector(".mobile-sticky-cta");
+
+    if (!stickyCta) {
+      return;
+    }
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const threshold = 14;
+
+    function updateStickyCta() {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+
+      if (Math.abs(delta) < threshold) {
+        ticking = false;
+        return;
+      }
+
+      if (currentScrollY <= 24 || delta < 0) {
+        stickyCta.classList.remove("cta-hidden");
+      } else if (delta > 0) {
+        stickyCta.classList.add("cta-hidden");
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) {
+          return;
+        }
+
+        ticking = true;
+        window.requestAnimationFrame(updateStickyCta);
+      },
+      { passive: true }
+    );
+  }
+
   initScrollAnimations();
   initExperienceCustomizer();
+  initStickyCtaVisibility();
 })();
