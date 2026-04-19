@@ -242,12 +242,17 @@ p {
   padding: 0.95rem 1.35rem;
   border-radius: 999px;
   font-weight: 700;
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  transition:
+    transform 320ms ease,
+    box-shadow 320ms ease,
+    background 320ms ease,
+    border-color 320ms ease;
 }
 
 .btn:hover,
 .btn:focus-visible {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
 }
 
 .btn-primary {
@@ -553,6 +558,21 @@ p {
   color: var(--muted);
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 480ms ease,
+    transform 480ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .mobile-sticky-cta {
   position: fixed;
   right: 1rem;
@@ -677,5 +697,27 @@ p {
 
   .mobile-sticky-cta {
     display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn,
+  .reveal {
+    transition: none;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

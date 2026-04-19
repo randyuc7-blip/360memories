@@ -129,8 +129,67 @@
   setLanguage(getLang());
 
   document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
-    button.addEventListener("click", () => {
+      button.addEventListener("click", () => {
       setLanguage(button.dataset.langToggle);
     });
   });
+
+  function initScrollAnimations() {
+    const revealTargets = [
+      ".hero-copy > .eyebrow",
+      ".hero-copy > h1",
+      ".hero-copy > .hero-lead",
+      ".hero-copy > .hero-actions",
+      ".hero-panel",
+      "#packages .section-heading",
+      "#packages .packages-grid",
+      "#gallery .section-heading",
+      "#gallery .gallery-layout",
+      "#value .section-heading",
+      "#value .value-grid",
+      "#faq .section-heading",
+      "#faq .faq-list",
+      "#service-area .section-heading",
+      "#service-area .service-area-card",
+      "#lead-form .lead-panel",
+      "#lead-form .lead-form"
+    ];
+
+    revealTargets.forEach((selector, index) => {
+      document.querySelectorAll(selector).forEach((node) => {
+        node.classList.add("reveal");
+        node.style.setProperty("--reveal-delay", `${Math.min(index * 35, 180)}ms`);
+      });
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".reveal").forEach((node) => {
+        node.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.18,
+        rootMargin: "0px 0px -8% 0px"
+      }
+    );
+
+    document.querySelectorAll(".reveal").forEach((node) => {
+      observer.observe(node);
+    });
+  }
+
+  initScrollAnimations();
 })();
