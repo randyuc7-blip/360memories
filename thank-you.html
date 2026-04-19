@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You | 360 Memories</title>
+    <meta
+      name="description"
+      content="Thank you for contacting 360 Memories. We will follow up soon to confirm availability for your event."
+    />
+    <meta name="theme-color" content="#0b0b0d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="thank-you" class="thank-you-body">
+    <div class="page-shell">
+      <header class="site-header">
+        <a href="/index.html" class="brand" aria-label="360 Memories home">
+          <div class="brand-mark">
+            <img src="assets/logo.png" alt="360 Memories Video Booth logo" data-logo />
+          </div>
+        </a>
+
+        <div class="header-actions">
+          <nav class="lang-toggle" aria-label="Language selector">
+            <button type="button" class="lang-btn" data-lang-toggle="es">ES</button>
+            <button type="button" class="lang-btn" data-lang-toggle="en">EN</button>
+          </nav>
+        </div>
+      </header>
+
+      <main class="thank-you-main">
+        <section class="thank-you-card">
+          <img
+            src="assets/logo-badge-dark.png"
+            alt="360 Memories circular logo badge"
+            class="thank-you-logo"
+          />
+          <p class="eyebrow" data-i18n="thanksEyebrow"></p>
+          <h1 data-i18n="thanksTitle"></h1>
+          <p data-i18n="thanksBody"></p>
+
+          <div class="thank-you-actions">
+            <a href="/index.html#lead-form" class="btn btn-primary" data-i18n="thanksBackToForm"></a>
+            <a href="#" class="btn btn-secondary" data-phone-link>
+              <span data-i18n="heroCallCta"></span>
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
