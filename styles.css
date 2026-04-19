@@ -119,9 +119,12 @@ textarea {
 }
 
 .lang-btn {
-  padding: 0.55rem 0.9rem;
+  min-width: 92px;
+  padding: 0.55rem 1rem;
   background: transparent;
   color: var(--muted);
+  font-size: 0.94rem;
+  text-align: center;
   cursor: pointer;
   transition: 180ms ease;
 }
@@ -734,6 +737,11 @@ p {
 
   .lang-toggle {
     align-self: flex-start;
+  }
+
+  .lang-btn {
+    min-width: 88px;
+    font-size: 0.9rem;
   }
 
   .header-call {
