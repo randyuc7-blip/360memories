@@ -568,10 +568,11 @@ p {
 .phone-preview-shell {
   display: flex;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .phone-preview-frame {
-  width: min(100%, 360px);
+  width: min(100%, 340px);
   padding: 0.85rem;
   border-radius: 36px;
   background:
@@ -914,10 +915,17 @@ p {
 
   .phone-preview-shell {
     order: -1;
+    margin-bottom: 1.5rem;
   }
 
   .phone-preview-frame {
-    width: min(100%, 320px);
+    width: min(100%, 260px);
+    padding: 0.72rem;
+    border-radius: 32px;
+  }
+
+  .phone-preview-screen {
+    border-radius: 24px;
   }
 
   .gallery-tile.wide {
@@ -936,6 +944,22 @@ p {
 
   .mobile-sticky-cta {
     display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .phone-preview-shell {
+    margin-bottom: 1.25rem;
+  }
+
+  .phone-preview-frame {
+    width: min(100%, 232px);
+    padding: 0.62rem;
+    border-radius: 28px;
+  }
+
+  .phone-preview-screen {
+    border-radius: 21px;
   }
 }
 
