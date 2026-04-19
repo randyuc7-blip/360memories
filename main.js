@@ -50,7 +50,7 @@
 
     document.querySelectorAll("[data-phone-link]").forEach((node) => {
       node.setAttribute("href", `tel:+1${phoneDigits}`);
-      if (!node.textContent.trim()) {
+      if (!node.textContent.trim() && !node.querySelector("[data-i18n]")) {
         node.textContent = config.phoneDisplay;
       }
     });
