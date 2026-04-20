@@ -183,6 +183,114 @@
     });
   }
 
+  function initShowcaseBoothMotion() {
+    const section = document.querySelector("#experience-customizer");
+    const boothVisual = document.querySelector(".showcase-booth-visual");
+    const armGroup = document.querySelector(".showcase-booth-arm-group");
+    const ring = document.querySelector(".showcase-booth-ring");
+
+    if (!section || !boothVisual || !armGroup || !ring) {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let targetProgress = 0;
+    let armProgress = 0;
+    let ringProgress = 0;
+    let isInView = false;
+    let ticking = false;
+
+    function updateTargetProgress() {
+      if (!isInView) {
+        ticking = false;
+        return;
+      }
+
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      if (rect.bottom <= 0) {
+        targetProgress = 1;
+        ticking = false;
+        return;
+      }
+
+      if (rect.top >= viewportHeight) {
+        targetProgress = 0;
+        ticking = false;
+        return;
+      }
+
+      const travel = viewportHeight + rect.height;
+      const rawProgress = (viewportHeight - rect.top) / travel;
+      targetProgress = Math.min(1, Math.max(0, rawProgress));
+      ticking = false;
+    }
+
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting;
+        if (!isInView) {
+          return;
+        }
+
+        updateTargetProgress();
+      },
+      {
+        threshold: 0.2
+      }
+    );
+
+    sectionObserver.observe(section);
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) {
+          return;
+        }
+
+        ticking = true;
+        window.requestAnimationFrame(updateTargetProgress);
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("resize", updateTargetProgress);
+    updateTargetProgress();
+
+    function animateShowcaseBooth() {
+      const isMobile = window.innerWidth <= 720;
+      const maxRotation = isMobile ? 160 : 220;
+      const verticalOffset = isMobile ? 8 : 12;
+      const showcaseScale = 1 + targetProgress * (isMobile ? 0.025 : 0.035);
+      const armDelta = targetProgress - armProgress;
+      const ringDelta = targetProgress - ringProgress;
+
+      armProgress += armDelta * 0.1;
+      ringProgress += ringDelta * 0.08;
+
+      if (Math.abs(armDelta) < 0.0015) {
+        armProgress = targetProgress;
+      }
+
+      if (Math.abs(ringDelta) < 0.0015) {
+        ringProgress = targetProgress;
+      }
+
+      boothVisual.style.transform = `scale(${showcaseScale})`;
+      armGroup.style.transform = `rotate(${armProgress * maxRotation}deg) translate3d(0, ${armProgress * verticalOffset}px, 0)`;
+      ring.style.transform = `translate(-50%, -50%) rotate(${ringProgress * maxRotation * 0.12}deg) scale(${1 + ringProgress * 0.04})`;
+
+      window.requestAnimationFrame(animateShowcaseBooth);
+    }
+
+    window.requestAnimationFrame(animateShowcaseBooth);
+  }
+
   function initScrollAnimations() {
     const revealTargets = [
       ".hero-copy > .eyebrow",
@@ -337,10 +445,6 @@
     const baseStarElements = [];
     let activeZip = null;
     let hoveredZip = null;
-    let targetScrollProgress = 0;
-    let armScrollProgress = 0;
-    let ringScrollProgress = 0;
-    let isConstellationInView = false;
     const baseGroup = document.createElement("div");
     const armGroup = document.createElement("div");
     const ringGroup = document.createElement("div");
@@ -349,10 +453,6 @@
     armGroup.className = "constellation-group constellation-arm-group";
     ringGroup.className = "constellation-group constellation-ring-group";
     starsLayer.append(baseGroup, armGroup, ringGroup);
-
-    const pivot = { x: 39, y: 36 };
-    armGroup.style.transformOrigin = `${pivot.x}% ${pivot.y}%`;
-    ringGroup.style.transformOrigin = `${pivot.x}% ${pivot.y}%`;
 
     starData.forEach((star) => {
       const button = document.createElement("button");
@@ -456,7 +556,6 @@
 
     const glowObserver = new IntersectionObserver(
       ([entry]) => {
-        isConstellationInView = entry.isIntersecting;
         baseStarElements.forEach((element) => {
           element.classList.toggle("active-glow", entry.isIntersecting);
         });
@@ -466,54 +565,7 @@
 
     glowObserver.observe(constellation);
 
-    function updateScrollTarget() {
-      if (!isConstellationInView) {
-        return;
-      }
-
-      const rect = constellation.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      if (rect.bottom <= 0) {
-        targetScrollProgress = 1;
-        return;
-      }
-
-      if (rect.top >= viewportHeight) {
-        targetScrollProgress = 0;
-        return;
-      }
-
-      const travel = viewportHeight + rect.height;
-      const rawProgress = (viewportHeight - rect.top) / travel;
-      targetScrollProgress = Math.min(1, Math.max(0, rawProgress));
-    }
-
-    updateScrollTarget();
-    window.addEventListener("scroll", updateScrollTarget, { passive: true });
-    window.addEventListener("resize", updateScrollTarget);
-
     function animate(time) {
-      const maxRotation = window.innerWidth <= 720 ? 160 : 220;
-      const armOffset = window.innerWidth <= 720 ? 3.5 : 5.5;
-      const ringOffset = window.innerWidth <= 720 ? 4.5 : 7;
-      const armDelta = targetScrollProgress - armScrollProgress;
-      const ringDelta = targetScrollProgress - ringScrollProgress;
-
-      armScrollProgress += armDelta * 0.1;
-      ringScrollProgress += ringDelta * 0.08;
-
-      if (Math.abs(armDelta) < 0.0015) {
-        armScrollProgress = targetScrollProgress;
-      }
-
-      if (Math.abs(ringDelta) < 0.0015) {
-        ringScrollProgress = targetScrollProgress;
-      }
-
-      armGroup.style.transform = `rotate(${armScrollProgress * maxRotation}deg) translate3d(0, ${armScrollProgress * armOffset}px, 0)`;
-      ringGroup.style.transform = `rotate(${ringScrollProgress * maxRotation * 1.03}deg) translate3d(0, ${ringScrollProgress * ringOffset}px, 0)`;
-
       stars.forEach((star) => {
         const driftX = Math.sin(time / 2400 + star.phase) * (star.driftX / 10);
         const driftY = Math.cos(time / 2600 + star.phase) * (star.driftY / 10);
@@ -557,6 +609,7 @@
 
   initScrollAnimations();
   initExperienceCustomizer();
+  initShowcaseBoothMotion();
   initStickyCtaVisibility();
   initServiceConstellation();
 })();
