@@ -297,28 +297,39 @@
     }
 
     const starData = [
-      { zip: "75234", name: "Farmers Branch", x: 49, y: 29, center: true, driftX: 3.4, driftY: 2.4, phase: 0.2 },
-      { zip: "75001", name: "Addison", x: 32, y: 24, driftX: 2.8, driftY: 3.1, phase: 0.8 },
-      { zip: "75006", name: "Carrollton", x: 23, y: 20, driftX: 3.1, driftY: 2.2, phase: 1.4 },
-      { zip: "75007", name: "Carrollton", x: 15, y: 14, driftX: 2.6, driftY: 2.8, phase: 2.2 },
-      { zip: "75019", name: "Coppell", x: 30, y: 42, driftX: 3.4, driftY: 2.5, phase: 2.8 },
-      { zip: "75038", name: "Irving", x: 43, y: 46, driftX: 2.8, driftY: 3.4, phase: 3.5 },
-      { zip: "75039", name: "Irving", x: 56, y: 52, driftX: 3.2, driftY: 2.1, phase: 4.1 },
-      { zip: "75063", name: "Irving", x: 64, y: 35, driftX: 2.7, driftY: 3.1, phase: 4.7 },
-      { zip: "75080", name: "Richardson", x: 72, y: 20, driftX: 3.3, driftY: 2.7, phase: 5.3 },
-      { zip: "75248", name: "Dallas", x: 83, y: 28, driftX: 2.9, driftY: 2.3, phase: 5.9 }
+      // Base platform ring
+      { zip: "75007", name: "Carrollton", x: 30, y: 44, driftX: 2.6, driftY: 2.3, phase: 0.2 },
+      { zip: "75006", name: "Carrollton", x: 39, y: 36, driftX: 2.4, driftY: 2.1, phase: 0.8 },
+      { zip: "75001", name: "Addison", x: 51, y: 34, driftX: 2.2, driftY: 2.4, phase: 1.4 },
+      { zip: "75234", name: "Farmers Branch", x: 61, y: 38, center: true, driftX: 2.8, driftY: 2.3, phase: 2.0 },
+      { zip: "75019", name: "Coppell", x: 66, y: 48, driftX: 2.5, driftY: 2.2, phase: 2.6 },
+      { zip: "75038", name: "Irving", x: 61, y: 56, driftX: 2.3, driftY: 2.5, phase: 3.2 },
+      { zip: "75039", name: "Irving", x: 49, y: 60, driftX: 2.7, driftY: 2.1, phase: 3.8 },
+      { zip: "75063", name: "Irving", x: 36, y: 55, driftX: 2.4, driftY: 2.4, phase: 4.4 },
+
+      // Vertical arm, screen, and top ring
+      { zip: "75080", name: "Richardson", x: 33, y: 28, driftX: 2.2, driftY: 2.0, phase: 5.0 },
+      { zip: "75248", name: "Dallas", x: 40, y: 16, driftX: 2.5, driftY: 2.1, phase: 5.6 }
     ];
 
     const connections = [
+      // Base platform ring
       ["75007", "75006"],
       ["75006", "75001"],
       ["75001", "75234"],
       ["75234", "75019"],
-      ["75234", "75038"],
+      ["75019", "75038"],
       ["75038", "75039"],
       ["75039", "75063"],
-      ["75234", "75080"],
-      ["75080", "75248"]
+      ["75063", "75007"],
+      // Vertical arm from back-left of base
+      ["75006", "75080"],
+      // Small screen block
+      ["75080", "75001"],
+      ["75080", "75234"],
+      // Top ring light / attachment
+      ["75080", "75248"],
+      ["75248", "75001"]
     ];
 
     const stars = new Map();
