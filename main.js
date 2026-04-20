@@ -286,7 +286,126 @@
     );
   }
 
+  function initServiceConstellation() {
+    const constellation = document.querySelector(".service-area-constellation");
+    const starsLayer = document.querySelector(".constellation-stars");
+    const linesLayer = document.querySelector(".constellation-lines");
+    const tooltip = document.querySelector(".constellation-tooltip");
+
+    if (!constellation || !starsLayer || !linesLayer || !tooltip) {
+      return;
+    }
+
+    const starData = [
+      { zip: "75234", name: "Farmers Branch", x: 49, y: 29, center: true, driftX: 3.4, driftY: 2.4, phase: 0.2 },
+      { zip: "75001", name: "Addison", x: 32, y: 24, driftX: 2.8, driftY: 3.1, phase: 0.8 },
+      { zip: "75006", name: "Carrollton", x: 23, y: 20, driftX: 3.1, driftY: 2.2, phase: 1.4 },
+      { zip: "75007", name: "Carrollton", x: 15, y: 14, driftX: 2.6, driftY: 2.8, phase: 2.2 },
+      { zip: "75019", name: "Coppell", x: 30, y: 42, driftX: 3.4, driftY: 2.5, phase: 2.8 },
+      { zip: "75038", name: "Irving", x: 43, y: 46, driftX: 2.8, driftY: 3.4, phase: 3.5 },
+      { zip: "75039", name: "Irving", x: 56, y: 52, driftX: 3.2, driftY: 2.1, phase: 4.1 },
+      { zip: "75063", name: "Irving", x: 64, y: 35, driftX: 2.7, driftY: 3.1, phase: 4.7 },
+      { zip: "75080", name: "Richardson", x: 72, y: 20, driftX: 3.3, driftY: 2.7, phase: 5.3 },
+      { zip: "75248", name: "Dallas", x: 83, y: 28, driftX: 2.9, driftY: 2.3, phase: 5.9 }
+    ];
+
+    const connections = [
+      ["75007", "75006"],
+      ["75006", "75001"],
+      ["75001", "75234"],
+      ["75234", "75019"],
+      ["75234", "75038"],
+      ["75038", "75039"],
+      ["75039", "75063"],
+      ["75234", "75080"],
+      ["75080", "75248"]
+    ];
+
+    const stars = new Map();
+    const lines = [];
+
+    starData.forEach((star) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `service-star${star.center ? " is-center" : ""}`;
+      button.setAttribute("aria-label", `${star.zip} - ${star.name}`);
+      button.dataset.zip = star.zip;
+      button.dataset.name = star.name;
+      starsLayer.appendChild(button);
+      stars.set(star.zip, { ...star, element: button, currentX: star.x, currentY: star.y });
+    });
+
+    connections.forEach(([from, to]) => {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("class", "constellation-line");
+      linesLayer.appendChild(line);
+      lines.push({ from, to, element: line });
+    });
+
+    function showTooltip(star) {
+      tooltip.textContent = `${star.zip} - ${star.name}`;
+      tooltip.style.left = `${star.currentX}%`;
+      tooltip.style.top = `${star.currentY}%`;
+      tooltip.classList.add("is-visible");
+      stars.forEach((entry) => entry.element.classList.toggle("is-active", entry.zip === star.zip));
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove("is-visible");
+      stars.forEach((entry) => entry.element.classList.remove("is-active"));
+    }
+
+    stars.forEach((star) => {
+      star.element.addEventListener("mouseenter", () => showTooltip(star));
+      star.element.addEventListener("focus", () => showTooltip(star));
+      star.element.addEventListener("click", () => showTooltip(star));
+      star.element.addEventListener("mouseleave", hideTooltip);
+      star.element.addEventListener("blur", hideTooltip);
+    });
+
+    constellation.addEventListener("mouseleave", hideTooltip);
+
+    function animate(time) {
+      stars.forEach((star) => {
+        const driftX = Math.sin(time / 2400 + star.phase) * (star.driftX / 10);
+        const driftY = Math.cos(time / 2600 + star.phase) * (star.driftY / 10);
+        star.currentX = star.x + driftX;
+        star.currentY = star.y + driftY;
+        star.element.style.left = `${star.currentX}%`;
+        star.element.style.top = `${star.currentY}%`;
+      });
+
+      lines.forEach((line) => {
+        const from = stars.get(line.from);
+        const to = stars.get(line.to);
+        if (!from || !to) {
+          return;
+        }
+
+        line.element.setAttribute("x1", from.currentX);
+        line.element.setAttribute("y1", from.currentY);
+        line.element.setAttribute("x2", to.currentX);
+        line.element.setAttribute("y2", to.currentY);
+      });
+
+      if (tooltip.classList.contains("is-visible")) {
+        const activeStar = Array.from(stars.values()).find((star) =>
+          star.element.classList.contains("is-active")
+        );
+        if (activeStar) {
+          tooltip.style.left = `${activeStar.currentX}%`;
+          tooltip.style.top = `${activeStar.currentY}%`;
+        }
+      }
+
+      window.requestAnimationFrame(animate);
+    }
+
+    window.requestAnimationFrame(animate);
+  }
+
   initScrollAnimations();
   initExperienceCustomizer();
   initStickyCtaVisibility();
+  initServiceConstellation();
 })();

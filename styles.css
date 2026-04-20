@@ -642,6 +642,7 @@ p {
 .service-area-card {
   max-width: 760px;
   padding: 1.6rem;
+  position: relative;
 }
 
 .zip-chip {
@@ -657,6 +658,91 @@ p {
 
 .zip-chip strong {
   color: var(--text);
+}
+
+.service-area-constellation {
+  position: relative;
+  margin-top: 1.5rem;
+  min-height: 250px;
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 61, 0.08), transparent 28%),
+    rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.constellation-lines,
+.constellation-stars {
+  position: absolute;
+  inset: 0;
+}
+
+.constellation-lines {
+  width: 100%;
+  height: 100%;
+}
+
+.constellation-line {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 0.45;
+}
+
+.service-star {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  margin-top: -6px;
+  border: 0;
+  padding: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 3px rgba(255, 107, 61, 0.14),
+    0 0 16px rgba(255, 107, 61, 0.28);
+  cursor: pointer;
+  transition:
+    transform 320ms ease,
+    box-shadow 320ms ease,
+    background 320ms ease;
+}
+
+.service-star.is-center {
+  background: var(--accent);
+  box-shadow:
+    0 0 0 3px rgba(255, 107, 61, 0.18),
+    0 0 18px rgba(255, 107, 61, 0.45);
+}
+
+.service-star:hover,
+.service-star:focus-visible,
+.service-star.is-active {
+  transform: scale(1.18);
+  box-shadow:
+    0 0 0 4px rgba(255, 107, 61, 0.2),
+    0 0 20px rgba(255, 107, 61, 0.5);
+}
+
+.constellation-tooltip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -140%);
+  padding: 0.45rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(10, 10, 13, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.constellation-tooltip.is-visible {
+  opacity: 1;
 }
 
 .lead-section {
@@ -920,6 +1006,10 @@ p {
     gap: 0.9rem;
   }
 
+  .service-area-constellation {
+    min-height: 220px;
+  }
+
   .customizer-controls {
     padding: 1.25rem;
   }
@@ -1000,6 +1090,14 @@ p {
   .mobile-sticky-cta {
     right: 0.75rem;
     left: 0.75rem;
+  }
+
+  .service-area-constellation {
+    min-height: 200px;
+  }
+
+  .constellation-line:nth-child(n + 8) {
+    display: none;
   }
 }
 
