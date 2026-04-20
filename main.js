@@ -298,18 +298,18 @@
 
     const starData = [
       // Base platform ring
-      { zip: "75007", name: "Carrollton", x: 30, y: 44, driftX: 2.6, driftY: 2.3, phase: 0.2 },
-      { zip: "75006", name: "Carrollton", x: 39, y: 36, driftX: 2.4, driftY: 2.1, phase: 0.8 },
-      { zip: "75001", name: "Addison", x: 51, y: 34, driftX: 2.2, driftY: 2.4, phase: 1.4 },
-      { zip: "75234", name: "Farmers Branch", x: 61, y: 38, center: true, driftX: 2.8, driftY: 2.3, phase: 2.0 },
-      { zip: "75019", name: "Coppell", x: 66, y: 48, driftX: 2.5, driftY: 2.2, phase: 2.6 },
-      { zip: "75038", name: "Irving", x: 61, y: 56, driftX: 2.3, driftY: 2.5, phase: 3.2 },
-      { zip: "75039", name: "Irving", x: 49, y: 60, driftX: 2.7, driftY: 2.1, phase: 3.8 },
-      { zip: "75063", name: "Irving", x: 36, y: 55, driftX: 2.4, driftY: 2.4, phase: 4.4 },
+      { zip: "75007", name: "Carrollton", x: 30, y: 44, groups: ["base"], driftX: 2.6, driftY: 2.3, phase: 0.2 },
+      { zip: "75006", name: "Carrollton", x: 39, y: 36, groups: ["base", "arm"], driftX: 2.4, driftY: 2.1, phase: 0.8 },
+      { zip: "75001", name: "Addison", x: 51, y: 34, groups: ["base", "arm", "screen", "ring"], driftX: 2.2, driftY: 2.4, phase: 1.4 },
+      { zip: "75234", name: "Farmers Branch", x: 61, y: 38, center: true, groups: ["base", "screen"], driftX: 2.8, driftY: 2.3, phase: 2.0 },
+      { zip: "75019", name: "Coppell", x: 66, y: 48, groups: ["base"], driftX: 2.5, driftY: 2.2, phase: 2.6 },
+      { zip: "75038", name: "Irving", x: 61, y: 56, groups: ["base"], driftX: 2.3, driftY: 2.5, phase: 3.2 },
+      { zip: "75039", name: "Irving", x: 49, y: 60, groups: ["base"], driftX: 2.7, driftY: 2.1, phase: 3.8 },
+      { zip: "75063", name: "Irving", x: 36, y: 55, groups: ["base"], driftX: 2.4, driftY: 2.4, phase: 4.4 },
 
       // Vertical arm, screen, and top ring
-      { zip: "75080", name: "Richardson", x: 33, y: 28, driftX: 2.2, driftY: 2.0, phase: 5.0 },
-      { zip: "75248", name: "Dallas", x: 40, y: 16, driftX: 2.5, driftY: 2.1, phase: 5.6 }
+      { zip: "75080", name: "Richardson", x: 33, y: 28, groups: ["arm", "ring"], driftX: 2.2, driftY: 2.0, phase: 5.0 },
+      { zip: "75248", name: "Dallas", x: 40, y: 16, groups: ["ring", "attachment"], driftX: 2.5, driftY: 2.1, phase: 5.6 }
     ];
 
     const connections = [
@@ -334,16 +334,25 @@
 
     const stars = new Map();
     const lines = [];
+    const baseStarElements = [];
+    let activeZip = null;
+    let hoveredZip = null;
 
     starData.forEach((star) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `service-star${star.center ? " is-center" : ""}`;
+      const groupClasses = (star.groups || []).map((group) => `is-${group}`).join(" ");
+      button.className = `service-star${star.center ? " is-center" : ""}${groupClasses ? ` ${groupClasses}` : ""}`;
       button.setAttribute("aria-label", `${star.zip} - ${star.name}`);
       button.dataset.zip = star.zip;
       button.dataset.name = star.name;
+      button.style.setProperty("--pulse-delay", `${star.phase * 0.14}s`);
       starsLayer.appendChild(button);
       stars.set(star.zip, { ...star, element: button, currentX: star.x, currentY: star.y });
+
+      if ((star.groups || []).includes("base")) {
+        baseStarElements.push(button);
+      }
     });
 
     connections.forEach(([from, to]) => {
@@ -358,23 +367,75 @@
       tooltip.style.left = `${star.currentX}%`;
       tooltip.style.top = `${star.currentY}%`;
       tooltip.classList.add("is-visible");
-      stars.forEach((entry) => entry.element.classList.toggle("is-active", entry.zip === star.zip));
     }
 
-    function hideTooltip() {
-      tooltip.classList.remove("is-visible");
-      stars.forEach((entry) => entry.element.classList.remove("is-active"));
+    function syncTooltip() {
+      const visibleZip = hoveredZip || activeZip;
+
+      if (!visibleZip) {
+        tooltip.classList.remove("is-visible");
+        return;
+      }
+
+      const star = stars.get(visibleZip);
+      if (!star) {
+        return;
+      }
+
+      showTooltip(star);
+    }
+
+    function updateStarStates() {
+      stars.forEach((star) => {
+        const isActive = star.zip === activeZip || star.zip === hoveredZip;
+        const shouldDim =
+          Boolean(activeZip) && activeZip !== star.zip && hoveredZip !== star.zip;
+        star.element.classList.toggle("is-active", isActive);
+        star.element.classList.toggle("is-dimmed", shouldDim);
+      });
+
+      syncTooltip();
     }
 
     stars.forEach((star) => {
-      star.element.addEventListener("mouseenter", () => showTooltip(star));
-      star.element.addEventListener("focus", () => showTooltip(star));
-      star.element.addEventListener("click", () => showTooltip(star));
-      star.element.addEventListener("mouseleave", hideTooltip);
-      star.element.addEventListener("blur", hideTooltip);
+      star.element.addEventListener("mouseenter", () => {
+        hoveredZip = star.zip;
+        updateStarStates();
+      });
+      star.element.addEventListener("focus", () => {
+        hoveredZip = star.zip;
+        updateStarStates();
+      });
+      star.element.addEventListener("click", () => {
+        activeZip = star.zip;
+        hoveredZip = star.zip;
+        updateStarStates();
+      });
+      star.element.addEventListener("mouseleave", () => {
+        hoveredZip = null;
+        updateStarStates();
+      });
+      star.element.addEventListener("blur", () => {
+        hoveredZip = null;
+        updateStarStates();
+      });
     });
 
-    constellation.addEventListener("mouseleave", hideTooltip);
+    constellation.addEventListener("mouseleave", () => {
+      hoveredZip = null;
+      updateStarStates();
+    });
+
+    const glowObserver = new IntersectionObserver(
+      ([entry]) => {
+        baseStarElements.forEach((element) => {
+          element.classList.toggle("active-glow", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    glowObserver.observe(constellation);
 
     function animate(time) {
       stars.forEach((star) => {
@@ -399,13 +460,12 @@
         line.element.setAttribute("y2", to.currentY);
       });
 
-      if (tooltip.classList.contains("is-visible")) {
-        const activeStar = Array.from(stars.values()).find((star) =>
-          star.element.classList.contains("is-active")
-        );
-        if (activeStar) {
-          tooltip.style.left = `${activeStar.currentX}%`;
-          tooltip.style.top = `${activeStar.currentY}%`;
+      const tooltipZip = hoveredZip || activeZip;
+      if (tooltip.classList.contains("is-visible") && tooltipZip) {
+        const star = stars.get(tooltipZip);
+        if (star) {
+          tooltip.style.left = `${star.currentX}%`;
+          tooltip.style.top = `${star.currentY}%`;
         }
       }
 
