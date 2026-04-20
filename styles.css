@@ -500,11 +500,12 @@ p {
 
 .customizer-layout {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 1.5rem;
   align-items: center;
 }
 
+.customizer-visual,
 .customizer-controls,
 .phone-preview-frame {
   border: 1px solid var(--line);
@@ -512,16 +513,29 @@ p {
   box-shadow: var(--shadow);
 }
 
+.customizer-visual {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  transition:
+    background 360ms ease,
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    transform 360ms ease;
+}
+
 .customizer-controls {
   display: grid;
-  gap: 1.2rem;
+  gap: 1.35rem;
   padding: 2rem;
   border-radius: var(--radius-md);
+  align-self: stretch;
 }
 
 .control-group {
   display: grid;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 .control-label {
@@ -530,18 +544,26 @@ p {
   font-weight: 700;
 }
 
+.control-helper {
+  max-width: 30rem;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
 .control-options {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 0.75rem;
 }
 
 .control-chip {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.03);
   color: var(--muted);
-  min-height: 46px;
-  padding: 0.75rem 1rem;
+  min-height: 52px;
+  padding: 0.9rem 1.1rem;
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
@@ -563,6 +585,7 @@ p {
   background: var(--accent);
   border-color: transparent;
   color: #ffffff;
+  box-shadow: 0 14px 30px rgba(255, 107, 61, 0.2);
 }
 
 .phone-preview-shell {
@@ -571,15 +594,18 @@ p {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  padding: 1.75rem 0 1rem;
+  min-height: 28rem;
+  padding: 1.75rem 0 1.15rem;
 }
 
 .showcase-booth-visual {
   position: absolute;
-  inset: 0;
+  inset: 1.5rem 0 0;
   pointer-events: none;
   transform-origin: center bottom;
-  transition: transform 360ms ease;
+  transition:
+    transform 380ms ease,
+    opacity 380ms ease;
 }
 
 .showcase-booth-arm-group {
@@ -589,7 +615,10 @@ p {
   width: min(42vw, 180px);
   height: min(42vw, 180px);
   transform-origin: 12% 88%;
-  will-change: transform;
+  transform: rotate(14deg);
+  transition:
+    transform 420ms ease,
+    filter 360ms ease;
 }
 
 .showcase-booth-arm {
@@ -601,6 +630,9 @@ p {
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 107, 61, 0.48));
   box-shadow: 0 0 18px rgba(255, 107, 61, 0.18);
+  transition:
+    background 360ms ease,
+    box-shadow 360ms ease;
 }
 
 .showcase-booth-ring {
@@ -614,6 +646,10 @@ p {
   box-shadow:
     0 0 0 5px rgba(255, 107, 61, 0.12),
     0 0 24px rgba(255, 107, 61, 0.18);
+  transition:
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    transform 420ms ease;
 }
 
 .showcase-booth-base {
@@ -628,6 +664,9 @@ p {
     0 10px 28px rgba(0, 0, 0, 0.22),
     0 0 24px rgba(255, 107, 61, 0.12);
   transform: translateX(-50%);
+  transition:
+    background 360ms ease,
+    box-shadow 360ms ease;
 }
 
 .phone-preview-frame {
@@ -639,6 +678,11 @@ p {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
     #101014;
+  transition:
+    transform 380ms ease,
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    background 360ms ease;
 }
 
 .phone-preview-screen {
@@ -653,11 +697,133 @@ p {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 360ms ease;
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease,
+    filter 360ms ease;
 }
 
 .phone-preview-screen img.is-fading {
-  opacity: 0.35;
+  opacity: 0.28;
+  transform: scale(1.02);
+}
+
+.experience-summary {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 30rem;
+}
+
+.experience-summary-label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experience-summary h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.experience-summary p:last-child {
+  color: var(--muted);
+}
+
+.customizer-visual.is-switching {
+  transform: scale(0.99);
+}
+
+.customizer-visual.is-switching .showcase-booth-visual {
+  transform: scale(1.02);
+}
+
+.customizer-visual.is-switching .phone-preview-frame {
+  transform: scale(0.985);
+}
+
+.customizer-visual.theme-wedding {
+  background:
+    radial-gradient(circle at top right, rgba(244, 179, 70, 0.18), transparent 30%),
+    linear-gradient(180deg, rgba(255, 148, 92, 0.08), rgba(255, 255, 255, 0.02)),
+    var(--surface);
+}
+
+.customizer-visual.theme-wedding .showcase-booth-arm {
+  background: linear-gradient(180deg, rgba(255, 247, 230, 0.98), rgba(255, 176, 106, 0.6));
+  box-shadow: 0 0 24px rgba(255, 176, 106, 0.22);
+}
+
+.customizer-visual.theme-wedding .showcase-booth-ring {
+  border-color: rgba(255, 245, 224, 0.95);
+  box-shadow:
+    0 0 0 6px rgba(241, 190, 98, 0.14),
+    0 0 28px rgba(255, 176, 106, 0.22);
+}
+
+.customizer-visual.theme-wedding .showcase-booth-base {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(244, 179, 70, 0.36), rgba(255, 255, 255, 0.08));
+}
+
+.customizer-visual.theme-birthday {
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 61, 0.22), transparent 34%),
+    linear-gradient(180deg, rgba(255, 88, 88, 0.08), rgba(255, 255, 255, 0.02)),
+    var(--surface);
+}
+
+.customizer-visual.theme-birthday .showcase-booth-arm-group {
+  transform: rotate(18deg);
+}
+
+.customizer-visual.theme-birthday .showcase-booth-arm {
+  background: linear-gradient(180deg, rgba(255, 245, 245, 0.98), rgba(255, 107, 61, 0.72));
+  box-shadow: 0 0 28px rgba(255, 107, 61, 0.26);
+}
+
+.customizer-visual.theme-birthday .showcase-booth-ring {
+  border-color: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 0 0 6px rgba(255, 107, 61, 0.16),
+    0 0 32px rgba(255, 107, 61, 0.3);
+}
+
+.customizer-visual.theme-birthday .showcase-booth-base {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 107, 61, 0.44), rgba(255, 255, 255, 0.08));
+}
+
+.customizer-visual.theme-corporate {
+  background:
+    radial-gradient(circle at top right, rgba(117, 137, 160, 0.16), transparent 32%),
+    linear-gradient(180deg, rgba(74, 84, 97, 0.12), rgba(255, 255, 255, 0.02)),
+    var(--surface);
+}
+
+.customizer-visual.theme-corporate .showcase-booth-arm-group {
+  transform: rotate(10deg);
+}
+
+.customizer-visual.theme-corporate .showcase-booth-arm {
+  background: linear-gradient(180deg, rgba(241, 246, 250, 0.96), rgba(111, 130, 151, 0.55));
+  box-shadow: 0 0 18px rgba(111, 130, 151, 0.2);
+}
+
+.customizer-visual.theme-corporate .showcase-booth-ring {
+  border-color: rgba(233, 240, 246, 0.92);
+  box-shadow:
+    0 0 0 6px rgba(117, 137, 160, 0.12),
+    0 0 24px rgba(117, 137, 160, 0.2);
+}
+
+.customizer-visual.theme-corporate .showcase-booth-base {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(117, 137, 160, 0.34), rgba(255, 255, 255, 0.08));
 }
 
 .value-grid {
@@ -993,6 +1159,11 @@ p {
     order: -1;
     margin-bottom: 1.5rem;
     padding-top: 1.25rem;
+    min-height: 24rem;
+  }
+
+  .customizer-visual {
+    padding: 1.35rem;
   }
 
   .phone-preview-frame {
@@ -1021,6 +1192,10 @@ p {
     height: 16px;
   }
 
+  .experience-summary h3 {
+    font-size: 1.45rem;
+  }
+
   .gallery-tile.wide {
     grid-column: auto;
   }
@@ -1043,6 +1218,7 @@ p {
 @media (max-width: 480px) {
   .phone-preview-shell {
     margin-bottom: 1.25rem;
+    min-height: 22rem;
   }
 
   .phone-preview-frame {
@@ -1111,7 +1287,10 @@ p {
   .reveal,
   .showcase-booth-visual,
   .showcase-booth-arm-group,
-  .showcase-booth-ring {
+  .showcase-booth-ring,
+  .customizer-visual,
+  .phone-preview-frame,
+  .phone-preview-screen img {
     transition: none;
   }
 

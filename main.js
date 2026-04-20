@@ -123,6 +123,8 @@
       button.classList.toggle("is-active", isActive);
       button.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
+
+    document.dispatchEvent(new CustomEvent("site:languagechange", { detail: { lang } }));
   }
 
   setTextContent();
@@ -136,159 +138,95 @@
 
   function initExperienceCustomizer() {
     const previewImage = document.querySelector("#experience-preview-image");
-    const optionButtons = document.querySelectorAll("[data-preview-group]");
+    const optionButtons = document.querySelectorAll("[data-experience-option]");
+    const visual = document.querySelector("[data-experience-visual]");
+    const toneNode = document.querySelector("[data-experience-tone]");
+    const titleNode = document.querySelector("[data-experience-title]");
+    const descriptionNode = document.querySelector("[data-experience-description]");
 
-    if (!previewImage || !optionButtons.length) {
+    if (!previewImage || !optionButtons.length || !visual || !toneNode || !titleNode || !descriptionNode) {
       return;
     }
 
-    const state = {
-      event: "wedding",
-      overlay: "minimal",
-      theme: "warm"
+    const themes = {
+      wedding: {
+        image: "images/preview-wedding-elegant-warm.svg",
+        toneKey: "customizerWeddingTone",
+        titleKey: "customizerWeddingTitle",
+        bodyKey: "customizerWeddingBody",
+        alt: {
+          es: "Vista previa de una experiencia 360 para boda",
+          en: "Preview of a wedding 360 booth experience"
+        }
+      },
+      birthday: {
+        image: "images/preview-birthday-party-bright.svg",
+        toneKey: "customizerBirthdayTone",
+        titleKey: "customizerBirthdayTitle",
+        bodyKey: "customizerBirthdayBody",
+        alt: {
+          es: "Vista previa de una experiencia 360 para cumpleanos",
+          en: "Preview of a birthday 360 booth experience"
+        }
+      },
+      corporate: {
+        image: "images/preview-corporate-minimal-dark.svg",
+        toneKey: "customizerCorporateTone",
+        titleKey: "customizerCorporateTitle",
+        bodyKey: "customizerCorporateBody",
+        alt: {
+          es: "Vista previa de una experiencia 360 para evento corporativo",
+          en: "Preview of a corporate 360 booth experience"
+        }
+      }
     };
 
-    function formatAlt() {
-      return `Phone preview of a ${state.event} 360 booth experience with a ${state.overlay} overlay and ${state.theme} theme`;
-    }
+    let selectedEvent = "wedding";
+    let transitionTimer = null;
 
-    function updatePreview() {
+    function updatePreview(eventKey) {
+      const theme = themes[eventKey];
+      const dictionary = config.translations[getLang()];
+
+      if (!theme || !dictionary) {
+        return;
+      }
+
+      selectedEvent = eventKey;
+      visual.className = `customizer-visual theme-${eventKey}`;
+      visual.classList.add("is-switching");
       previewImage.classList.add("is-fading");
 
-      window.setTimeout(() => {
-        previewImage.src = `images/preview-${state.event}-${state.overlay}-${state.theme}.svg`;
-        previewImage.alt = formatAlt();
+      window.clearTimeout(transitionTimer);
+      transitionTimer = window.setTimeout(() => {
+        previewImage.src = theme.image;
+        previewImage.alt = theme.alt[getLang()] || theme.alt.es;
+        toneNode.textContent = dictionary[theme.toneKey];
+        titleNode.textContent = dictionary[theme.titleKey];
+        descriptionNode.textContent = dictionary[theme.bodyKey];
         previewImage.classList.remove("is-fading");
-      }, 180);
+        visual.classList.remove("is-switching");
+      }, 220);
     }
 
     optionButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        const group = button.dataset.previewGroup;
-        const value = button.dataset.previewValue;
-
-        if (!group || !value || state[group] === value) {
+        const value = button.dataset.experienceOption;
+        if (!value || value === selectedEvent) {
           return;
         }
 
-        state[group] = value;
-
-        document
-          .querySelectorAll(`[data-preview-group="${group}"]`)
-          .forEach((node) => node.classList.remove("is-active"));
-
+        optionButtons.forEach((node) => node.classList.remove("is-active"));
         button.classList.add("is-active");
-        updatePreview();
+        updatePreview(value);
       });
     });
-  }
 
-  function initShowcaseBoothMotion() {
-    const section = document.querySelector("#experience-customizer");
-    const boothVisual = document.querySelector(".showcase-booth-visual");
-    const armGroup = document.querySelector(".showcase-booth-arm-group");
-    const ring = document.querySelector(".showcase-booth-ring");
+    document.addEventListener("site:languagechange", () => {
+      updatePreview(selectedEvent);
+    });
 
-    if (!section || !boothVisual || !armGroup || !ring) {
-      return;
-    }
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    let targetProgress = 0;
-    let armProgress = 0;
-    let ringProgress = 0;
-    let isInView = false;
-    let ticking = false;
-
-    function updateTargetProgress() {
-      if (!isInView) {
-        ticking = false;
-        return;
-      }
-
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      if (rect.bottom <= 0) {
-        targetProgress = 1;
-        ticking = false;
-        return;
-      }
-
-      if (rect.top >= viewportHeight) {
-        targetProgress = 0;
-        ticking = false;
-        return;
-      }
-
-      const travel = viewportHeight + rect.height;
-      const rawProgress = (viewportHeight - rect.top) / travel;
-      targetProgress = Math.min(1, Math.max(0, rawProgress));
-      ticking = false;
-    }
-
-    const sectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        isInView = entry.isIntersecting;
-        if (!isInView) {
-          return;
-        }
-
-        updateTargetProgress();
-      },
-      {
-        threshold: 0.2
-      }
-    );
-
-    sectionObserver.observe(section);
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (ticking) {
-          return;
-        }
-
-        ticking = true;
-        window.requestAnimationFrame(updateTargetProgress);
-      },
-      { passive: true }
-    );
-
-    window.addEventListener("resize", updateTargetProgress);
-    updateTargetProgress();
-
-    function animateShowcaseBooth() {
-      const isMobile = window.innerWidth <= 720;
-      const maxRotation = isMobile ? 160 : 220;
-      const verticalOffset = isMobile ? 8 : 12;
-      const showcaseScale = 1 + targetProgress * (isMobile ? 0.025 : 0.035);
-      const armDelta = targetProgress - armProgress;
-      const ringDelta = targetProgress - ringProgress;
-
-      armProgress += armDelta * 0.1;
-      ringProgress += ringDelta * 0.08;
-
-      if (Math.abs(armDelta) < 0.0015) {
-        armProgress = targetProgress;
-      }
-
-      if (Math.abs(ringDelta) < 0.0015) {
-        ringProgress = targetProgress;
-      }
-
-      boothVisual.style.transform = `scale(${showcaseScale})`;
-      armGroup.style.transform = `rotate(${armProgress * maxRotation}deg) translate3d(0, ${armProgress * verticalOffset}px, 0)`;
-      ring.style.transform = `translate(-50%, -50%) rotate(${ringProgress * maxRotation * 0.12}deg) scale(${1 + ringProgress * 0.04})`;
-
-      window.requestAnimationFrame(animateShowcaseBooth);
-    }
-
-    window.requestAnimationFrame(animateShowcaseBooth);
+    updatePreview(selectedEvent);
   }
 
   function initScrollAnimations() {
@@ -396,6 +334,5 @@
 
   initScrollAnimations();
   initExperienceCustomizer();
-  initShowcaseBoothMotion();
   initStickyCtaVisibility();
 })();

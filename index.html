@@ -166,51 +166,42 @@
           </div>
 
           <div class="customizer-layout">
-            <div class="customizer-controls">
-              <div class="control-group" data-control-group="event">
-                <p class="control-label" data-i18n="customizerEventLabel"></p>
-                <div class="control-options">
-                  <button type="button" class="control-chip is-active" data-preview-group="event" data-preview-value="wedding" data-i18n="customizerEventWedding"></button>
-                  <button type="button" class="control-chip" data-preview-group="event" data-preview-value="birthday" data-i18n="customizerEventBirthday"></button>
-                  <button type="button" class="control-chip" data-preview-group="event" data-preview-value="corporate" data-i18n="customizerEventCorporate"></button>
+            <div class="customizer-visual theme-wedding" data-experience-visual>
+              <div class="phone-preview-shell">
+                <div class="showcase-booth-visual" aria-hidden="true">
+                  <div class="showcase-booth-arm-group">
+                    <span class="showcase-booth-arm"></span>
+                    <span class="showcase-booth-ring"></span>
+                  </div>
+                  <span class="showcase-booth-base"></span>
+                </div>
+                <div class="phone-preview-frame">
+                  <div class="phone-preview-screen">
+                    <img
+                      id="experience-preview-image"
+                      src="images/preview-wedding-elegant-warm.svg"
+                      alt="Phone preview of a wedding 360 booth experience"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div class="control-group" data-control-group="overlay">
-                <p class="control-label" data-i18n="customizerOverlayLabel"></p>
-                <div class="control-options">
-                  <button type="button" class="control-chip is-active" data-preview-group="overlay" data-preview-value="minimal" data-i18n="customizerOverlayMinimal"></button>
-                  <button type="button" class="control-chip" data-preview-group="overlay" data-preview-value="elegant" data-i18n="customizerOverlayElegant"></button>
-                  <button type="button" class="control-chip" data-preview-group="overlay" data-preview-value="party" data-i18n="customizerOverlayParty"></button>
-                </div>
-              </div>
-
-              <div class="control-group" data-control-group="theme">
-                <p class="control-label" data-i18n="customizerThemeLabel"></p>
-                <div class="control-options">
-                  <button type="button" class="control-chip is-active" data-preview-group="theme" data-preview-value="warm" data-i18n="customizerThemeWarm"></button>
-                  <button type="button" class="control-chip" data-preview-group="theme" data-preview-value="dark" data-i18n="customizerThemeDark"></button>
-                  <button type="button" class="control-chip" data-preview-group="theme" data-preview-value="bright" data-i18n="customizerThemeBright"></button>
-                </div>
+              <div class="experience-summary">
+                <p class="experience-summary-label" data-experience-tone data-i18n="customizerWeddingTone"></p>
+                <h3 data-experience-title data-i18n="customizerWeddingTitle"></h3>
+                <p data-experience-description data-i18n="customizerWeddingBody"></p>
               </div>
             </div>
 
-            <div class="phone-preview-shell">
-              <div class="showcase-booth-visual" aria-hidden="true">
-                <div class="showcase-booth-arm-group">
-                  <span class="showcase-booth-arm"></span>
-                  <span class="showcase-booth-ring"></span>
-                </div>
-                <span class="showcase-booth-base"></span>
-              </div>
-              <div class="phone-preview-frame">
-                <div class="phone-preview-screen">
-                  <img
-                    id="experience-preview-image"
-                    src="images/preview-wedding-minimal-warm.svg"
-                    alt="Phone preview of a 360 booth wedding experience"
-                    loading="lazy"
-                  />
+            <div class="customizer-controls">
+              <div class="control-group">
+                <p class="control-label" data-i18n="customizerEventLabel"></p>
+                <p class="control-helper" data-i18n="customizerControlBody"></p>
+                <div class="control-options">
+                  <button type="button" class="control-chip is-active" data-experience-option="wedding" data-i18n="customizerEventWedding"></button>
+                  <button type="button" class="control-chip" data-experience-option="birthday" data-i18n="customizerEventBirthday"></button>
+                  <button type="button" class="control-chip" data-experience-option="corporate" data-i18n="customizerEventCorporate"></button>
                 </div>
               </div>
             </div>
