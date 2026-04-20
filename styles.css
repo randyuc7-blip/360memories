@@ -677,6 +677,12 @@ p {
   inset: 0;
 }
 
+.constellation-group {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
 .constellation-lines {
   width: 100%;
   height: 100%;

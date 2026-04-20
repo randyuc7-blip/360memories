@@ -298,18 +298,18 @@
 
     const starData = [
       // Base platform ring
-      { zip: "75007", name: "Carrollton", x: 30, y: 44, groups: ["base"], driftX: 2.6, driftY: 2.3, phase: 0.2 },
-      { zip: "75006", name: "Carrollton", x: 39, y: 36, groups: ["base", "arm"], driftX: 2.4, driftY: 2.1, phase: 0.8 },
-      { zip: "75001", name: "Addison", x: 51, y: 34, groups: ["base", "arm", "screen", "ring"], driftX: 2.2, driftY: 2.4, phase: 1.4 },
-      { zip: "75234", name: "Farmers Branch", x: 61, y: 38, center: true, groups: ["base", "screen"], driftX: 2.8, driftY: 2.3, phase: 2.0 },
-      { zip: "75019", name: "Coppell", x: 66, y: 48, groups: ["base"], driftX: 2.5, driftY: 2.2, phase: 2.6 },
-      { zip: "75038", name: "Irving", x: 61, y: 56, groups: ["base"], driftX: 2.3, driftY: 2.5, phase: 3.2 },
-      { zip: "75039", name: "Irving", x: 49, y: 60, groups: ["base"], driftX: 2.7, driftY: 2.1, phase: 3.8 },
-      { zip: "75063", name: "Irving", x: 36, y: 55, groups: ["base"], driftX: 2.4, driftY: 2.4, phase: 4.4 },
+      { zip: "75007", name: "Carrollton", x: 30, y: 44, layer: "base", groups: ["base"], driftX: 2.6, driftY: 2.3, phase: 0.2 },
+      { zip: "75006", name: "Carrollton", x: 39, y: 36, layer: "base", groups: ["base", "pivot"], driftX: 2.4, driftY: 2.1, phase: 0.8 },
+      { zip: "75001", name: "Addison", x: 51, y: 34, layer: "base", groups: ["base", "screen"], driftX: 2.2, driftY: 2.4, phase: 1.4 },
+      { zip: "75234", name: "Farmers Branch", x: 61, y: 38, layer: "base", center: true, groups: ["base", "screen"], driftX: 2.8, driftY: 2.3, phase: 2.0 },
+      { zip: "75019", name: "Coppell", x: 66, y: 48, layer: "base", groups: ["base"], driftX: 2.5, driftY: 2.2, phase: 2.6 },
+      { zip: "75038", name: "Irving", x: 61, y: 56, layer: "base", groups: ["base"], driftX: 2.3, driftY: 2.5, phase: 3.2 },
+      { zip: "75039", name: "Irving", x: 49, y: 60, layer: "base", groups: ["base"], driftX: 2.7, driftY: 2.1, phase: 3.8 },
+      { zip: "75063", name: "Irving", x: 36, y: 55, layer: "base", groups: ["base"], driftX: 2.4, driftY: 2.4, phase: 4.4 },
 
       // Vertical arm, screen, and top ring
-      { zip: "75080", name: "Richardson", x: 33, y: 28, groups: ["arm", "ring"], driftX: 2.2, driftY: 2.0, phase: 5.0 },
-      { zip: "75248", name: "Dallas", x: 40, y: 16, groups: ["ring", "attachment"], driftX: 2.5, driftY: 2.1, phase: 5.6 }
+      { zip: "75080", name: "Richardson", x: 33, y: 28, layer: "arm", groups: ["arm"], driftX: 2.2, driftY: 2.0, phase: 5.0 },
+      { zip: "75248", name: "Dallas", x: 40, y: 16, layer: "ring", groups: ["ring", "attachment"], driftX: 2.5, driftY: 2.1, phase: 5.6 }
     ];
 
     const connections = [
@@ -337,6 +337,22 @@
     const baseStarElements = [];
     let activeZip = null;
     let hoveredZip = null;
+    let targetScrollProgress = 0;
+    let armScrollProgress = 0;
+    let ringScrollProgress = 0;
+    let isConstellationInView = false;
+    const baseGroup = document.createElement("div");
+    const armGroup = document.createElement("div");
+    const ringGroup = document.createElement("div");
+
+    baseGroup.className = "constellation-group constellation-base-group";
+    armGroup.className = "constellation-group constellation-arm-group";
+    ringGroup.className = "constellation-group constellation-ring-group";
+    starsLayer.append(baseGroup, armGroup, ringGroup);
+
+    const pivot = { x: 39, y: 36 };
+    armGroup.style.transformOrigin = `${pivot.x}% ${pivot.y}%`;
+    ringGroup.style.transformOrigin = `${pivot.x}% ${pivot.y}%`;
 
     starData.forEach((star) => {
       const button = document.createElement("button");
@@ -347,7 +363,9 @@
       button.dataset.zip = star.zip;
       button.dataset.name = star.name;
       button.style.setProperty("--pulse-delay", `${star.phase * 0.14}s`);
-      starsLayer.appendChild(button);
+      const targetLayer =
+        star.layer === "arm" ? armGroup : star.layer === "ring" ? ringGroup : baseGroup;
+      targetLayer.appendChild(button);
       stars.set(star.zip, { ...star, element: button, currentX: star.x, currentY: star.y });
 
       if ((star.groups || []).includes("base")) {
@@ -362,10 +380,20 @@
       lines.push({ from, to, element: line });
     });
 
+    function getRenderedPosition(star) {
+      const starRect = star.element.getBoundingClientRect();
+      const constellationRect = constellation.getBoundingClientRect();
+      return {
+        x: ((starRect.left + starRect.width / 2 - constellationRect.left) / constellationRect.width) * 100,
+        y: ((starRect.top + starRect.height / 2 - constellationRect.top) / constellationRect.height) * 100
+      };
+    }
+
     function showTooltip(star) {
+      const tooltipPosition = getRenderedPosition(star);
       tooltip.textContent = `${star.zip} - ${star.name}`;
-      tooltip.style.left = `${star.currentX}%`;
-      tooltip.style.top = `${star.currentY}%`;
+      tooltip.style.left = `${tooltipPosition.x}%`;
+      tooltip.style.top = `${tooltipPosition.y}%`;
       tooltip.classList.add("is-visible");
     }
 
@@ -428,6 +456,7 @@
 
     const glowObserver = new IntersectionObserver(
       ([entry]) => {
+        isConstellationInView = entry.isIntersecting;
         baseStarElements.forEach((element) => {
           element.classList.toggle("active-glow", entry.isIntersecting);
         });
@@ -437,7 +466,54 @@
 
     glowObserver.observe(constellation);
 
+    function updateScrollTarget() {
+      if (!isConstellationInView) {
+        return;
+      }
+
+      const rect = constellation.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      if (rect.bottom <= 0) {
+        targetScrollProgress = 1;
+        return;
+      }
+
+      if (rect.top >= viewportHeight) {
+        targetScrollProgress = 0;
+        return;
+      }
+
+      const travel = viewportHeight + rect.height;
+      const rawProgress = (viewportHeight - rect.top) / travel;
+      targetScrollProgress = Math.min(1, Math.max(0, rawProgress));
+    }
+
+    updateScrollTarget();
+    window.addEventListener("scroll", updateScrollTarget, { passive: true });
+    window.addEventListener("resize", updateScrollTarget);
+
     function animate(time) {
+      const maxRotation = window.innerWidth <= 720 ? 160 : 220;
+      const armOffset = window.innerWidth <= 720 ? 3.5 : 5.5;
+      const ringOffset = window.innerWidth <= 720 ? 4.5 : 7;
+      const armDelta = targetScrollProgress - armScrollProgress;
+      const ringDelta = targetScrollProgress - ringScrollProgress;
+
+      armScrollProgress += armDelta * 0.1;
+      ringScrollProgress += ringDelta * 0.08;
+
+      if (Math.abs(armDelta) < 0.0015) {
+        armScrollProgress = targetScrollProgress;
+      }
+
+      if (Math.abs(ringDelta) < 0.0015) {
+        ringScrollProgress = targetScrollProgress;
+      }
+
+      armGroup.style.transform = `rotate(${armScrollProgress * maxRotation}deg) translate3d(0, ${armScrollProgress * armOffset}px, 0)`;
+      ringGroup.style.transform = `rotate(${ringScrollProgress * maxRotation * 1.03}deg) translate3d(0, ${ringScrollProgress * ringOffset}px, 0)`;
+
       stars.forEach((star) => {
         const driftX = Math.sin(time / 2400 + star.phase) * (star.driftX / 10);
         const driftY = Math.cos(time / 2600 + star.phase) * (star.driftY / 10);
@@ -454,18 +530,22 @@
           return;
         }
 
-        line.element.setAttribute("x1", from.currentX);
-        line.element.setAttribute("y1", from.currentY);
-        line.element.setAttribute("x2", to.currentX);
-        line.element.setAttribute("y2", to.currentY);
+        const fromPosition = getRenderedPosition(from);
+        const toPosition = getRenderedPosition(to);
+
+        line.element.setAttribute("x1", fromPosition.x);
+        line.element.setAttribute("y1", fromPosition.y);
+        line.element.setAttribute("x2", toPosition.x);
+        line.element.setAttribute("y2", toPosition.y);
       });
 
       const tooltipZip = hoveredZip || activeZip;
       if (tooltip.classList.contains("is-visible") && tooltipZip) {
         const star = stars.get(tooltipZip);
         if (star) {
-          tooltip.style.left = `${star.currentX}%`;
-          tooltip.style.top = `${star.currentY}%`;
+          const tooltipPosition = getRenderedPosition(star);
+          tooltip.style.left = `${tooltipPosition.x}%`;
+          tooltip.style.top = `${tooltipPosition.y}%`;
         }
       }
 
