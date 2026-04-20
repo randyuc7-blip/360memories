@@ -114,7 +114,7 @@ window.siteConfig = {
       serviceEyebrow: "Area de servicio",
       serviceTitle: "Dallas y zonas cercanas",
       serviceIntro: "Atendemos eventos alrededor de Dallas con base en el area 75234.",
-      serviceZipLabel: "Base de servicio",
+      serviceMapLabel: "Sirviendo Dallas y areas cercanas",
       serviceBody:
         "Si tu evento es en Dallas o cerca de 75234, envianos la fecha y el venue para confirmar disponibilidad y cobertura.",
       formEyebrow: "Reserva tu fecha",
@@ -239,7 +239,7 @@ window.siteConfig = {
       serviceEyebrow: "Service area",
       serviceTitle: "Dallas and nearby areas",
       serviceIntro: "We serve events around Dallas with a home base in 75234.",
-      serviceZipLabel: "Service base",
+      serviceMapLabel: "Serving Dallas and surrounding areas",
       serviceBody:
         "If your event is in Dallas or near 75234, send over your date and venue so we can confirm availability and travel coverage.",
       formEyebrow: "Book your date",
